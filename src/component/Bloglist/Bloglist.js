@@ -1,7 +1,20 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { author, category } from '../../redux/blogs/action';
 
 export default function Bloglist({blog}) {
+
+    const dispatch = useDispatch();
+
     const {img,tagName,title,authorName,authorImg,postDate,readingTime} = blog;
+
+    const filterByCategory = (tag) => {
+        dispatch(category(tag));
+    }
+
+    const filterByAuthor = (name) => {
+        dispatch(author(name));
+    }
 
   return (
         <div
@@ -19,7 +32,7 @@ export default function Bloglist({blog}) {
                 className="flex-1 bg-white p-6 flex flex-col justify-between"
             >
                 <div className="flex-1">
-                    <p className="text-sm font-medium text-indigo-600">
+                    <p className="text-sm font-medium text-indigo-600 cursor-pointer" onClick={() => filterByCategory(tagName)}>
                         <span
                             className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800"
                         >
@@ -36,7 +49,9 @@ export default function Bloglist({blog}) {
                 </div>
 
                 <div className="mt-6 flex items-center">
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 cursor-pointer"
+                    onClick={() => filterByAuthor(authorName)}
+                    >
                         <img
                             className="h-10 w-10 rounded-full"
                             src={authorImg}
@@ -45,7 +60,8 @@ export default function Bloglist({blog}) {
                     </div>
                     <div className="ml-3">
                         <p
-                            className="text-sm font-medium text-gray-900 hover:underline"
+                            className="text-sm font-medium text-gray-900 hover:underline cursor-pointer"
+                            onClick={() => filterByAuthor(authorName)}
                         >
                             {authorName}
                         </p>
