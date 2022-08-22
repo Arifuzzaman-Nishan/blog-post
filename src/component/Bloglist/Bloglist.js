@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-export default function Bloglist() {
+export default function Bloglist({blog}) {
+    const {img,tagName,title,authorName,authorImg,postDate,readingTime} = blog;
+
   return (
         <div
             className="flex flex-col rounded-lg shadow-lg overflow-hidden"
@@ -8,7 +10,7 @@ export default function Bloglist() {
             <div className="flex-shrink-0">
                 <img
                     className="h-48 w-full object-cover"
-                    src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80"
+                    src={img}
                     alt=""
                 />
             </div>
@@ -21,14 +23,14 @@ export default function Bloglist() {
                         <span
                             className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800"
                         >
-                            Article
+                            {tagName}
                         </span>
                     </p>
-                    <a href="#" className="block mt-1">
+                    <a href="/" className="block mt-1">
                         <p
                             className="text-xl font-semibold text-gray-900"
                         >
-                            Boost your conversion rate
+                            {title}
                         </p>
                     </a>
                 </div>
@@ -37,7 +39,7 @@ export default function Bloglist() {
                     <div className="flex-shrink-0">
                         <img
                             className="h-10 w-10 rounded-full"
-                            src="https://avatars.githubusercontent.com/u/73503432?v=4"
+                            src={authorImg}
                             alt=""
                         />
                     </div>
@@ -45,18 +47,18 @@ export default function Bloglist() {
                         <p
                             className="text-sm font-medium text-gray-900 hover:underline"
                         >
-                            Learn with sumit
+                            {authorName}
                         </p>
                         <div
                             className="flex space-x-1 text-sm text-gray-500"
                         >
-                            <time datetime="2020-03-16">
-                                11 Jul, 2022
+                            <time dateTime="2020-03-16">
+                                {postDate}
                             </time>
                             <span aria-hidden="true">
                                 &middot;
                             </span>
-                            <span> 6 min read </span>
+                            <span> {readingTime} </span>
                         </div>
                     </div>
                 </div>
