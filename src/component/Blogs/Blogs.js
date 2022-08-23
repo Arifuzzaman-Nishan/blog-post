@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import Bloglist from '../Bloglist/Bloglist';
 
 export default function Blogs() {
-    const blogs = useSelector((state) => state);
+    const blogs = useSelector((state) => state.blogs);
+    const searchQuery = useSelector(state => state.searchText);
     
   return (
     <div className="relative bg-gray-50 pt-8 pb-20 px-4 sm:px-6 lg:pt-16 lg:pb-16 lg:px-8">
@@ -27,9 +28,29 @@ export default function Blogs() {
 
             {/* card grid  */}
             <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-                {blogs.map(blog => (
-                    <Bloglist key={blog.id} blog={blog}/>
-                ))}
+                {blogs
+                .filter((blog) => {
+                    if(searchQuery === ""){
+                        return true;
+                    }else if(blog.title.toLowerCase().includes(searchQuery.toLowerCase())){
+                        return true;
+                    }
+                }).length > 0 ?(
+                    blogs
+                    .filter((blog) => {
+                        if(searchQuery === ""){
+                            return true;
+                        }else if(blog.title.toLowerCase().includes(searchQuery.toLowerCase())){
+                            return true;
+                        }
+                    }).map(blog => (
+                        <Bloglist key={blog.id} blog={blog}/>
+                    ))
+                ):(
+                    <div className='border'>
+                        <h1>No result found</h1>
+                    </div>
+                )}
             </div>
             
         </div>
