@@ -1,12 +1,27 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import searchSvg from '../../assets/search.svg';
 import { blogSearch } from '../../redux/search/action';
 
 export default function Searchbar() {
 
   const dispatch = useDispatch();
-  const searchText = useSelector(state => state.searchText);
+
+  const handleOnChange = (e) => {
+    dispatch(blogSearch(e.target.value)); 
+  }
+
+  const debouncer = (fn,delay) => {
+    let clearSetTimeout = null;
+    return (...args) => {
+      if(clearSetTimeout){
+        clearTimeout(clearSetTimeout);
+      }
+      clearSetTimeout = setTimeout(() => {
+        fn(...args);
+      },delay)
+    }
+  }
 
   return (
     <div
@@ -17,8 +32,7 @@ export default function Searchbar() {
             type="search"
             name="search"
             placeholder="Search"
-            // value={searchText}
-            onChange={(e) => dispatch(blogSearch(e.target.value))}
+            onChange={debouncer(handleOnChange,1000)}
         />
         <img
             className="inline h-6 cursor-pointer"
